@@ -4,7 +4,6 @@ vendor
 
 *.log
 *.cache
-*.lock
 
 .vscode/
 .idea/
