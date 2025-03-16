@@ -1,0 +1,19 @@
+{
+    "name": "admin/backend",
+    "autoload": {
+        "psr-4": {
+            "Admin\\Backend\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Davit Harutyunyan",
+            "email": "harutyunyandavit2005@mail.ru"
+        }
+    ],
+    "require": {
+        "doctrine/dbal": "^4.2",
+        "webonyx/graphql-php": "^15.19",
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
