@@ -1,0 +1,13 @@
+.env
+data
+vendor
+
+*.log
+*.cache
+
+.vscode/
+.idea/
+.DS_Store
+
+*.bak
+*.swp
