@@ -64,6 +64,7 @@ class Seeder
                 foreach ($attributes as $attribute) {
 
                     $attribute['id'] = Guid::uuid4()->toString();
+                    $attribute['product_id'] = $product['id']; // Foreign key to products
                     $items = $attribute['items'];
                     unset($attribute['items']);
 
@@ -72,7 +73,7 @@ class Seeder
                     foreach ($items as $item) {
 
                         $item['id'] = Guid::uuid4()->toString();
-                        $item['attribute_id'] = $attribute['id']; // Link the item to the correct attribute
+                        $item['attribute_id'] = $attribute['id']; // Foreign key to attributes
                         $conn->insert('attribute_items', $item);
                     }
                 }

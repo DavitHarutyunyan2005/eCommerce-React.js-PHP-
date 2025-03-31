@@ -10,16 +10,28 @@ class DatabaseConnection
 {
     private static ?Connection $conn = null;
 
+    private static function loadConfig(): array
+    {
+        $configFile = __DIR__ . '/../../config/env.php';
+        if (!file_exists($configFile)) {
+            throw new Exception('Database configuration file not found.');
+        }
+
+        $config = require $configFile;
+        $dbConfig = $config['db'] ?? [];
+
+        if (!isset($dbConfig['host'], $dbConfig['name'], $dbConfig['user'], $dbConfig['pass'])) {
+            throw new Exception('Database configuration is incomplete.');
+        }
+
+        return $dbConfig;
+    }
+
     public static function getConnection(): Connection
     {
         if (self::$conn === null) {
             try {
-                $config = require __DIR__ . '/../../config/env.php';
-                $dbConfig = $config['db'] ?? [];
-
-                if (!isset($dbConfig['host'], $dbConfig['name'], $dbConfig['user'], $dbConfig['pass'])) {
-                    throw new Exception('Database configuration is incomplete.');
-                }
+                $dbConfig = self::loadConfig();
 
                 self::$conn = DriverManager::getConnection([
                     'dbname'   => $dbConfig['name'],
@@ -29,7 +41,7 @@ class DatabaseConnection
                     'driver'   => 'mysqli',
                 ]);
             } catch (Exception $e) {
-                die('Database connection failed: ' . $e->getMessage());
+                throw new Exception('Database connection failed: ' . $e->getMessage());
             }
         }
 

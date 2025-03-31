@@ -8,6 +8,7 @@
         "doctrine/orm": "^3.3",
         "vlucas/phpdotenv": "^5.6",
         "doctrine/migrations": "^3.8",
-        "ramsey/uuid": "^4.7"
+        "ramsey/uuid": "^4.7",
+        "webonyx/graphql-php": "^15.20"
     }
 }

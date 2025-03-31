@@ -17,28 +17,28 @@ class CreateTables
 
     public function create()
     {
-        // Create the schema
+        // Creating the schema
         $schema = new Schema();
 
-        // Define the categories table
+        // Defining the categories table
         $this->createCategoriesTable($schema);
 
-        // Define the products table
+        // Defining the products table
         $this->createProductsTable($schema);
 
-        // Define the attributes table
+        // Defining the attributes table
         $this->createAttributesTable($schema);
 
-        // Define the attribute items table
+        // Defining the attribute items table
         $this->createAttributeItemsTable($schema);
 
-        // Define the prices table
+        // Defining the prices table
         $this->createPricesTable($schema);
 
-        //Define the gallery table
+        //Defining the gallery table
         $this->createGalleryTable($schema);
 
-        // Execute the schema update
+        // Executing the schema update
         $this->applySchema($schema);
     }
 
@@ -76,10 +76,13 @@ class CreateTables
     {
         $attributesTable = $schema->createTable('attributes');
         $attributesTable->addColumn('id', Types::STRING, ['length' => 255]);
+        $attributesTable->addColumn('product_id', Types::STRING, ['length' => 255]);
         $attributesTable->addColumn('name', Types::STRING, ['length' => 255]);
         $attributesTable->addColumn('type', Types::STRING, ['length' => 50]); 
         $attributesTable->addColumn('__typename', Types::STRING, ['length' => 50]); 
         $attributesTable->setPrimaryKey(['id']);
+
+        $attributesTable->addForeignKeyConstraint('products', ['product_id'], ['id'], ['onDelete' => 'CASCADE']);
     }
 
     private function createAttributeItemsTable(Schema $schema)
@@ -117,7 +120,6 @@ class CreateTables
         $galleryTable->addColumn('image_url', Types::STRING, ['length' => 255]);
         $galleryTable->setPrimaryKey(['id']);
 
-
         $galleryTable->addForeignKeyConstraint('products', ['product_id'], ['id'], ['onDelete' => 'CASCADE']);
     }
 
@@ -131,6 +133,5 @@ private function applySchema(Schema $schema)
     $schemaManager->createTable($schema->getTable('attribute_items'));
     $schemaManager->createTable($schema->getTable('prices'));
     $schemaManager->createTable($schema->getTable('gallery'));
-
 }
 }
