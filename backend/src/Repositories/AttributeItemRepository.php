@@ -1,6 +1,6 @@
 <?php
 
-namespace Repositories;
+namespace App\Repositories;
 
 class AttributeItemRepository extends AbstractRepository
 {
@@ -8,7 +8,7 @@ class AttributeItemRepository extends AbstractRepository
 
     public function findAll(?string $attributeId = null): array
     {
-        if ($attributeId=== null) {
+        if ($attributeId === null) {
             throw new \InvalidArgumentException("Attribute ID must be provided.");
         }
 
@@ -21,7 +21,7 @@ class AttributeItemRepository extends AbstractRepository
 
             $result = $query->fetchAllAssociative();
 
-            return $result ?: []; 
+            return $result ?: [];
         } catch (\Exception $e) {
             //  $this->logger->error($e->getMessage());
             return [];

@@ -1,10 +1,10 @@
 <?php
 
-namespace Models\Products\Clothes;
+namespace App\Models\Products\Clothes;
 
-use Models\Attribute\SwatchAttribute;
-use Models\Category\ClothesCategory;
-use Models\Product;
+use App\Models\Attribute\SwatchAttribute;
+use App\Models\Category\ClothesCategory;
+use App\Models\Product;
 
 class SwatchClothingProduct extends Product
 {

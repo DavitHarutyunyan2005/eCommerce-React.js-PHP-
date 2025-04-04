@@ -1,12 +1,12 @@
 <?php
 
-namespace Repositories;
+namespace App\Repositories;
 
 class AttributeRepository extends AbstractRepository
 {
     protected string $table = 'attributes';
 
-    public function findAll(?string $productId = null): array
+    public  function findAll(?string $productId = null): array
     {
         if ($productId === null) {
             throw new \InvalidArgumentException("Product ID must be provided.");

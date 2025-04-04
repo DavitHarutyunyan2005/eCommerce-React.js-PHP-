@@ -1,8 +1,8 @@
 <?php
 
-namespace Models\Attribute;
+namespace App\Models\Attribute;
 
-use Models\Attribute;
+use App\Models\Attribute;
 
 class SwatchAttribute extends Attribute
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Database\Migrations;
+namespace App\Database\Migrations;
 
-use Database\DatabaseConnection;
+use App\Database\DatabaseConnection;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Types\Types;
 
@@ -47,7 +47,6 @@ class CreateTables
         $categoriesTable = $schema->createTable('categories');
         $categoriesTable->addColumn('id', Types::GUID, ['length' => 36]);
         $categoriesTable->addColumn('name', Types::STRING, ['length' => 255]);
-        $categoriesTable->addColumn('__typename', Types::STRING, ['length' => 50]);
         $categoriesTable->setPrimaryKey(['id']);
     }
 
@@ -61,7 +60,6 @@ class CreateTables
         $productsTable->addColumn('category_id', Types::GUID); // Foreign key to categories
         $productsTable->addColumn('inStock', Types::BOOLEAN, ['default' => true]);
         $productsTable->addColumn('brand', Types::STRING, ['length' => 255]);
-        $productsTable->addColumn('__typename', Types::STRING, ['length' => 50]);
         $productsTable->setPrimaryKey(['id']);
         
         $productsTable->addForeignKeyConstraint(
@@ -79,7 +77,6 @@ class CreateTables
         $attributesTable->addColumn('product_id', Types::STRING, ['length' => 255]);
         $attributesTable->addColumn('name', Types::STRING, ['length' => 255]);
         $attributesTable->addColumn('type', Types::STRING, ['length' => 50]); 
-        $attributesTable->addColumn('__typename', Types::STRING, ['length' => 50]); 
         $attributesTable->setPrimaryKey(['id']);
 
         $attributesTable->addForeignKeyConstraint('products', ['product_id'], ['id'], ['onDelete' => 'CASCADE']);
@@ -92,7 +89,6 @@ class CreateTables
         $attributeItemsTable->addColumn('attribute_id', Types::STRING, ['length' => 255]); 
         $attributeItemsTable->addColumn('value', Types::STRING, ['length' => 255]);
         $attributeItemsTable->addColumn('displayValue', Types::STRING, ['length' => 255]);
-        $attributeItemsTable->addColumn('__typename', Types::STRING, ['length' => 50]);
         $attributeItemsTable->setPrimaryKey(['id']);
         
         $attributeItemsTable->addForeignKeyConstraint('attributes', ['attribute_id'], ['id']);
@@ -106,7 +102,6 @@ class CreateTables
         $pricesTable->addColumn('amount', Types::FLOAT);
         $pricesTable->addColumn('currency_label', Types::STRING, ['length' => 50]);
         $pricesTable->addColumn('currency_symbol', Types::STRING, ['length' => 50]);
-        $pricesTable->addColumn('__typename', Types::STRING, ['length' => 50]);
         $pricesTable->setPrimaryKey(['id']);
         
         $pricesTable->addForeignKeyConstraint('products', ['product_id'], ['id'], ['onDelete' => 'CASCADE']);

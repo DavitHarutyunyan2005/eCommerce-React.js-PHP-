@@ -1,11 +1,11 @@
 <?php
 
-namespace Models;
+namespace App\Models;
 
-use Models\Attribute\SwatchAttribute;
-use Models\Attribute\TextAttribute;
-use Models\Category\ClothesCategory;
-use Models\Category\TechCategory;
+use App\Models\Attribute\SwatchAttribute;
+use App\Models\Attribute\TextAttribute;
+use App\Models\Category\ClothesCategory;
+use App\Models\Category\TechCategory;
 
 abstract class Product
 {

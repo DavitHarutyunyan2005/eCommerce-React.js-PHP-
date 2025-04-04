@@ -1,8 +1,8 @@
 <?php
 
-namespace Database\Seeders;
+namespace App\Database\Seeders;
 
-use Database\DatabaseConnection;
+use App\Database\DatabaseConnection;
 use Exception;
 use Ramsey\Uuid\Guid\Guid;
 
@@ -29,17 +29,21 @@ class Seeder
             $conn->beginTransaction();
 
             // Create categories first
-            foreach ($data['data']['categories'] as $entry) {
-                if (empty($entry['id'])) {
-                    $entry['id'] = Guid::uuid4()->toString(); // Generate UUID for categories
+            foreach ($data['data']['categories'] as $category) {
+
+                unset($category['__typename']);
+                if (empty($category['id'])) {
+                    $category['id'] = Guid::uuid4()->toString(); // Generate UUID for categories
                 }
-                $conn->insert('categories', $entry);
+                $conn->insert('categories', $category);
+
             }
 
 
             //INSERT PRODUCTS:
             foreach ($data['data']['products'] as $product) {
 
+                unset($product['__typename']);
                 $prices = $product['prices'];
                 unset($product['prices']);
 
@@ -56,13 +60,14 @@ class Seeder
                 }
                 $product['category_id'] = $categoryId;
 
-                
+
                 // INSERT PRODUCT:
                 $conn->insert('products', $product);
 
                 //INSERT ATTRIBUTES:
                 foreach ($attributes as $attribute) {
 
+                    unset($attribute['__typename']);
                     $attribute['id'] = Guid::uuid4()->toString();
                     $attribute['product_id'] = $product['id']; // Foreign key to products
                     $items = $attribute['items'];
@@ -72,6 +77,7 @@ class Seeder
 
                     foreach ($items as $item) {
 
+                        unset($item['__typename']);
                         $item['id'] = Guid::uuid4()->toString();
                         $item['attribute_id'] = $attribute['id']; // Foreign key to attributes
                         $conn->insert('attribute_items', $item);
@@ -81,6 +87,7 @@ class Seeder
                 //INSERT PRICES:
                 foreach ($prices as $price) {
 
+                    unset($price['__typename']);
                     $price['id'] = Guid::uuid4()->toString();
                     $price['currency_label'] = $price['currency']['label'];
                     $price['currency_symbol'] = $price['currency']['symbol'];

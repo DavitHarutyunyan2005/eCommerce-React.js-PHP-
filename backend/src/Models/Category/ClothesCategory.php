@@ -1,8 +1,8 @@
 <?php
 
-namespace Models\Category;
+namespace App\Models\Category;
 
-use Models\Category;
+use App\Models\Category;
 
 class ClothesCategory extends Category {
 

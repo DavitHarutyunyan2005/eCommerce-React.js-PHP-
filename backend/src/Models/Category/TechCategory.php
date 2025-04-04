@@ -1,12 +1,14 @@
 <?php
 
-namespace Models\Category;
+namespace App\Models\Category;
 
-use Models\Category;
+use App\Models\Category;
 
-class TechCategory extends Category {
+class TechCategory extends Category
+{
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct('Tech');
     }
-}   
+}

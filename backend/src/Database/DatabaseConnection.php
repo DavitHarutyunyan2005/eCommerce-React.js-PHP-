@@ -1,6 +1,6 @@
 <?php
 
-namespace Database;
+namespace App\Database;
 
 use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Connection;
