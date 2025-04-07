@@ -13,12 +13,16 @@ use App\GraphQL\Type\QueryType;
 use App\Repositories\AttributeItemRepository;
 use App\Repositories\AttributeRepository;
 use App\Repositories\CategoryRepository;
+use App\Repositories\OrderItemRepository;
+use App\Repositories\OrderRepository;
 use App\Repositories\ProductRepository;
 use GraphQL\GraphQL as GraphQLBase;
+use GraphQL\Type\Definition\InputObjectType;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
 use GraphQL\Type\SchemaConfig;
+use Psr\Log\NullLogger;
 use Throwable;
 use Symfony\Component\String\Exception\RuntimeException;
 
@@ -26,17 +30,20 @@ class Server
 {
     public static  function handle()
     {
+
         try {
 
             $conn = DatabaseConnection::getConnection();
-
+            $logger = new NullLogger();
             $categoryRepository = new CategoryRepository($conn);
             $attributeItemRepository = new AttributeItemRepository($conn);
             $attributeRepository = new AttributeRepository($conn);
             $productRepository = new ProductRepository($conn);
+            $orderItemRepository = new OrderItemRepository($conn, $logger);
+            $orderRepository = new OrderRepository($conn, $logger, $orderItemRepository);
             $attributeItemType = new AttributeItemType();
             $currencyType = new CurrencyType();
-            $priceType = new PriceType( $currencyType);
+            $priceType = new PriceType($currencyType);
 
             $categoryType = new ObjectType([
                 'name' => 'Category',
@@ -53,6 +60,21 @@ class Server
                         'type' => Type::listOf($attributeItemType),
                         'resolve' => function ($attribute) use ($attributeItemRepository) {
                             return $attributeItemRepository->findAll($attribute['id']);
+                        }
+                    ],
+                    'name' => ['type' => Type::string()],
+                    'type' => ['type' => Type::string()],
+                ]
+            ]);
+
+            $orderAttributeType = new ObjectType([
+                'name' => 'OrderAttributeSet',
+                'fields' => [
+                    'id' => Type::string(),
+                    'item' => [
+                        'type' => $attributeItemType,
+                        'resolve' => function ($attribute) use ($attributeItemRepository) {
+                            return $attributeItemRepository->findById($attribute['id']);
                         }
                     ],
                     'name' => ['type' => Type::string()],
@@ -82,32 +104,69 @@ class Server
                 ]
             ]);
 
-            
             $queryType = new QueryType($categoryType, $categoryRepository, $productType, $productRepository);
+
+            $orderProductType = new ObjectType([
+                'name' => 'OrderProduct',
+                'fields' => [
+                    'id' => Type::string(),
+                    'name' => Type::string(),
+                    'gallery' => Type::listOf(Type::string()),
+                    'description' => Type::string(),
+                    'category' => Type::string(),
+                    'attributes' => [
+                        'type' => Type::listOf($orderAttributeType),
+                        'resolve' => function ($product) use ($attributeRepository) {
+                            return $attributeRepository->findAll($product['id']);
+                        }
+                    ],
+                    'price' => $priceType,
+                    'brand' => Type::string()
+                ]
+            ]);
+
+            $orderResponseType = new ObjectType([
+                'name' => 'OrderResponse',
+                'fields' => [
+                    'success' => Type::nonNull(Type::boolean()),
+                    'orderRef' => Type::string(),
+                    'message' => Type::string(),
+                    'products' => Type::listOf($orderProductType),
+                ]
+            ]);
+
+
+            $productInputType = new InputObjectType([
+                'name' => 'OrderProductInput',
+                'fields' => [
+                    'productId' => Type::nonNull(Type::string()),
+                    'price' => Type::nonNull($priceType),
+                    'attributes' => Type::listOf($orderAttributeType),
+                    'quantity' => Type::nonNull(Type::int()),
+                ],
+            ]);
 
             $mutationType = new ObjectType([
                 'name' => 'Mutation',
                 'fields' => [
                     'insertOrder' => [
-                        'type' => Type::int(),
+                        'type' => $orderResponseType,
                         'args' => [
-                            'x' => ['type' => Type::int()],
-                            'y' => ['type' => Type::int()],
+                            'products' => Type::nonNull(Type::listOf($productInputType))
                         ],
-                        'resolve' => static function ($root, $args) {
-                            
+                        'resolve' => static function ($root, $args) use ($orderRepository) {
+                            return $orderRepository->insertOrder($args['products']);
                         },
                     ],
                 ],
             ]);
-
 
             // See docs on schema options:
             // https://webonyx.github.io/graphql-php/schema-definition/#configuration-options
             $schema = new Schema(
                 (new SchemaConfig())
                     ->setQuery($queryType)
-                // ->setMutation($mutationType)
+                    ->setMutation($mutationType)
             );
 
             $rawInput = file_get_contents('php://input');

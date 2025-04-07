@@ -17,17 +17,6 @@ abstract class AbstractRepository implements RepositoryInterface
     abstract public function findAll(?string $id = null): array;
 
 
-    public function findById(int $id): ?array
-    {
-        return $this->db->createQueryBuilder()
-            ->select('*')
-            ->from($this->table)
-            ->where('id = :id')
-            ->setParameter('id', $id)
-            ->fetchAssociative();
-    }
-
-
     public function save(array $data): void
     {
         $this->db->insert($this->table, $data);

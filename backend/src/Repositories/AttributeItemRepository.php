@@ -27,4 +27,22 @@ class AttributeItemRepository extends AbstractRepository
             return [];
         }
     }
+
+    public function findById(string $id): array
+    {
+        try {
+            $query = $this->db->createQueryBuilder()
+                ->select('a.value, a.displayValue')
+                ->from($this->table, 'a')
+                ->where('a.id = :id')
+                ->setParameter('id', $id);
+
+            $result = $query->fetchAssociative();
+
+            return $result ?: [];
+        } catch (\Exception $e) {
+            //  $this->logger->error($e->getMessage());
+            return [];
+        }
+    }
 }
