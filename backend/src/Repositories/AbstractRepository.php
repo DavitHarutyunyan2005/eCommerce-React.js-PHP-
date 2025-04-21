@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use Doctrine\DBAL\Connection;
-
 abstract class AbstractRepository implements RepositoryInterface
 {
     protected Connection $db;

@@ -18,6 +18,7 @@ abstract class Product
     protected string $currency_label;
     protected string $currency_symbol;
     protected string $brand;
+    protected string $madeFor; 
 
 
     public function __construct(
@@ -29,7 +30,8 @@ abstract class Product
         float $amount,
         string $currency_label,
         string $currency_symbol,
-        string $brand
+        string $brand,
+        string $madeFor
     ) {
         $this->id = $id;
         $this->name = $name;
@@ -40,6 +42,7 @@ abstract class Product
         $this->currency_label = $currency_label;
         $this->currency_symbol = $currency_symbol;
         $this->brand = $brand;
+        $this->madeFor = $madeFor;
     }
 
     // GETTERS:
@@ -89,5 +92,10 @@ abstract class Product
     public function getBrand(): string
     {
         return $this->brand;
+    }
+
+    public function getMadeFor(): string
+    {
+        return $this->madeFor;
     }
 }

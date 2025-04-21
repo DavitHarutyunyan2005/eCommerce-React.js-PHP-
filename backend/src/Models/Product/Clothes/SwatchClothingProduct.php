@@ -1,24 +1,25 @@
 <?php
 
-namespace Models\Products\Tech;
+namespace App\Models\Product\Clothes;
 
-use Models\Attribute\TextAttribute;
-use Models\Category\TechCategory;
-use Models\Product;
+use App\Models\Attribute\SwatchAttribute;
+use App\Models\Category\ClothesCategory;
+use App\Models\Product;
 
-class TextTechProduct extends Product
+class SwatchClothingProduct extends Product
 {
     protected string $id;
     protected string $name;
     protected string $description;
-    protected TechCategory $category;
-    protected TextAttribute $attribute;
+    protected ClothesCategory $category;
+    protected SwatchAttribute $attribute;
     protected bool $inStock;
     protected array $gallery;
     protected float $amount;
     protected string $currency_label;
     protected string $currency_symbol;
     protected string $brand;
+    protected string $madeFor; 
 
     public function __construct(
         string $id,
@@ -26,12 +27,13 @@ class TextTechProduct extends Product
         bool $inStock,
         array $gallery,
         string $description,
-        TechCategory $category,
-        TextAttribute $attribute,
+        ClothesCategory $category,
+        SwatchAttribute $attribute,
         float $amount,
         string $currency_label,
         string $currency_symbol,
-        string $brand
+        string $brand,
+        string $madeFor
     ) {
         parent::__construct(
             $id,
@@ -42,21 +44,22 @@ class TextTechProduct extends Product
             $amount,
             $currency_label,
             $currency_symbol,
-            $brand
+            $brand,
+            $madeFor
         );
         $this->category = $category;
         $this->attribute = $attribute;
     }
 
+
     // GETTERS:
-    public function getCategory(): TechCategory
+    public function getCategory(): ClothesCategory
     {
         return $this->category;
     }
 
-    public function getAttribute(): TextAttribute
+    public function getAttribute(): SwatchAttribute
     {
         return $this->attribute;
     }
-
 }

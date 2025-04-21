@@ -1,6 +1,6 @@
 <?php
 
-namespace App\GraphQL\Type;
+namespace App\GraphQL\Type\Price;
 
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
@@ -13,7 +13,7 @@ class PriceType extends ObjectType
             'name' => 'Price',
             'fields' => [
                 'amount' => Type::float(),
-                'currency' => Type::listOf($currencyType)
+                'currency' => $currencyType
                 ]
         ]);
     }

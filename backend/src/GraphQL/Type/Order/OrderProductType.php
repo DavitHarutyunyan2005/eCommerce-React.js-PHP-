@@ -1,36 +1,34 @@
 <?php
 
-namespace App\GraphQL\Type;
+namespace App\GraphQL\Type\Order;
 
+use App\GraphQL\Type\Price\PriceType;
+use App\Repositories\AttributeRepository;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
-use App\Repositories\AttributeRepository;
 
-class ProductType extends ObjectType
+class OrderProductType extends ObjectType
 {
     public function __construct(
-        AttributeType $attributeType,
+        OrderAttributeType $orderAttributeType,
         AttributeRepository $attributeRepository,
         PriceType $priceType
     ) {
         parent::__construct([
-            'name' => 'Product',
+            'name' => 'OrderProduct',
             'fields' => [
                 'id' => Type::string(),
                 'name' => Type::string(),
-                'inStock' => Type::boolean(),
                 'gallery' => Type::listOf(Type::string()),
                 'description' => Type::string(),
                 'category' => Type::string(),
                 'attributes' => [
-                    'type' => Type::listOf($attributeType),
+                    'type' => Type::listOf($orderAttributeType),
                     'resolve' => function ($product) use ($attributeRepository) {
                         return $attributeRepository->findAll($product['id']);
                     }
                 ],
-                'prices' => [
-                    'type' => Type::listOf($priceType)
-                ],
+                'price' => $priceType,
                 'brand' => Type::string()
             ]
         ]);

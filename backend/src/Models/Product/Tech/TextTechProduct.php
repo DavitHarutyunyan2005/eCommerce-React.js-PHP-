@@ -1,17 +1,17 @@
 <?php
 
-namespace Models\Products\Clothes;
+namespace App\Models\Product\Tech;
 
-use Models\Attribute\TextAttribute;
-use Models\Category\ClothesCategory;
-use Models\Product;
+use App\Models\Attribute\TextAttribute;
+use App\Models\Category\TechCategory;
+use App\Models\Product;
 
-class TextClothingProduct extends Product
+class TextTechProduct extends Product
 {
     protected string $id;
     protected string $name;
     protected string $description;
-    protected ClothesCategory $category;
+    protected TechCategory $category;
     protected TextAttribute $attribute;
     protected bool $inStock;
     protected array $gallery;
@@ -19,6 +19,7 @@ class TextClothingProduct extends Product
     protected string $currency_label;
     protected string $currency_symbol;
     protected string $brand;
+    protected string $madeFor;
 
     public function __construct(
         string $id,
@@ -26,31 +27,32 @@ class TextClothingProduct extends Product
         bool $inStock,
         array $gallery,
         string $description,
-        ClothesCategory $category,
+        TechCategory $category,
         TextAttribute $attribute,
         float $amount,
         string $currency_label,
         string $currency_symbol,
-        string $brand
+        string $brand,
+        string $madeFor
     ) {
         parent::__construct(
-            $id, 
-            $name, 
-            $inStock, 
-            $gallery, 
-            $description,  
-            $amount, 
-            $currency_label, 
-            $currency_symbol, 
-            $brand
+            $id,
+            $name,
+            $inStock,
+            $gallery,
+            $description,
+            $amount,
+            $currency_label,
+            $currency_symbol,
+            $brand,
+            $madeFor
         );
         $this->category = $category;
         $this->attribute = $attribute;
     }
 
-
-// GETTERS:
-    public function getCategory(): ClothesCategory
+    // GETTERS:
+    public function getCategory(): TechCategory
     {
         return $this->category;
     }
@@ -59,4 +61,5 @@ class TextClothingProduct extends Product
     {
         return $this->attribute;
     }
+
 }

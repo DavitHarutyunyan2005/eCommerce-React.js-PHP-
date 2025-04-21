@@ -1,20 +1,21 @@
 <?php
 
-namespace App\GraphQL;
+namespace App\GraphQL\Type;
 
 use App\GraphQL\Type\Order\OrderResponseType;
 use App\GraphQL\Type\Product\ProductInputType;
+use App\Repositories\OrderRepository;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
-use App\Repositories\OrderRepository;
 
-class OrderMutation extends ObjectType
+class MutationType extends ObjectType
 {
     public function __construct(
         OrderResponseType $orderResponseType,
-        OrderRepository $orderRepository,
-        ProductInputType $productInputType
-    ) {
+        ProductInputType $productInputType,
+        OrderRepository $orderRepository
+    )
+    {
         parent::__construct([
             'name' => 'Mutation',
             'fields' => [

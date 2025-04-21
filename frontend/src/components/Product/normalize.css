@@ -1,0 +1,249 @@
+/*  THOSE ARE THE DEFAULT CSS STYLES FOR HTML ELEMENTS.
+    I'M APPLYING THIS TO THE PARAGRAPH THAT 
+    IS MEANT TO PARSE THE HTML, SINCE TAILWIND
+    CHANGES THE STYLE OF HTML ELEMENTS (PREFLIGHT) */
+
+
+
+
+/* Block-level layout elements */
+#parse address,
+#parse article,
+#parse aside,
+#parse blockquote,
+#parse canvas,
+#parse dd,
+#parse div,
+#parse dl,
+#parse dt,
+#parse fieldset,
+#parse figcaption,
+#parse figure,
+#parse footer,
+#parse form,
+#parse h1,
+#parse h2,
+#parse h3,
+#parse h4,
+#parse h5,
+#parse h6,
+#parse header,
+#parse hr,
+#parse li,
+#parse main,
+#parse nav,
+#parse noscript,
+#parse ol,
+#parse p,
+#parse pre,
+#parse section,
+#parse table,
+#parse tfoot,
+#parse ul,
+#parse video {
+    display: block;
+    margin: 0.5em 0;
+}
+
+/* Headings */
+#parse h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+    font-weight: bold;
+}
+
+#parse h2 {
+    font-size: 1.5em;
+    margin: 0.75em 0;
+    font-weight: bold;
+}
+
+#parse h3 {
+    font-size: 1.17em;
+    margin: 0.83em 0;
+    font-weight: bold;
+}
+
+#parse h4 {
+    font-size: 1em;
+    margin: 1.12em 0;
+    font-weight: bold;
+}
+
+#parse h5 {
+    font-size: 0.83em;
+    margin: 1.5em 0;
+    font-weight: bold;
+}
+
+#parse h6 {
+    font-size: 0.67em;
+    margin: 1.67em 0;
+    font-weight: bold;
+}
+
+/* Lists */
+#parse ul,
+#parse ol {
+    padding-left: 40px;
+}
+
+#parse li {
+    display: list-item;
+}
+
+/* Inline elements with special style */
+#parse a {
+    color: -webkit-link;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#parse abbr[title] {
+    text-decoration: underline dotted;
+}
+
+#parse b,
+#parse strong {
+    font-weight: bold;
+}
+
+#parse i,
+#parse em {
+    font-style: italic;
+}
+
+#parse mark {
+    background: yellow;
+    color: black;
+}
+
+#parse small {
+    font-size: 80%;
+}
+
+#parse sub {
+    vertical-align: sub;
+    font-size: smaller;
+}
+
+#parse sup {
+    vertical-align: super;
+    font-size: smaller;
+}
+
+#parse code,
+#parse kbd,
+#parse pre,
+#parse samp {
+    font-family: monospace, monospace;
+    font-size: 1em;
+}
+
+#parse pre {
+    white-space: pre;
+    margin: 1em 0;
+}
+
+#parse q::before {
+    content: open-quote;
+}
+
+#parse q::after {
+    content: close-quote;
+}
+
+/* Tables */
+#parse table {
+    border-collapse: separate;
+    border-spacing: 2px;
+    display: table;
+    margin: 1em 0;
+}
+
+#parse caption {
+    display: table-caption;
+    text-align: center;
+}
+
+#parse th {
+    font-weight: bold;
+    text-align: center;
+}
+
+#parse th,
+#parse td {
+    padding: 0.5em;
+    display: table-cell;
+}
+
+/* Forms */
+#parse input,
+#parse button,
+#parse select,
+#parse textarea {
+    font: inherit;
+    margin: 0;
+    padding: 1px 2px;
+}
+
+#parse input[type="checkbox"],
+#parse input[type="radio"] {
+    box-sizing: border-box;
+    padding: 0;
+}
+
+#parse button {
+    appearance: button;
+    text-transform: none;
+}
+
+#parse fieldset {
+    padding: 0.35em 0.75em 0.625em;
+    margin: 0.5em 0;
+    border: 1px solid #ccc;
+}
+
+#parse legend {
+    padding: 0;
+    display: table;
+    max-width: 100%;
+    white-space: normal;
+    color: inherit;
+}
+
+/* Media */
+#parse img {
+    border-style: none;
+    max-width: 100%;
+}
+
+#parse audio,
+#parse video {
+    display: inline-block;
+}
+
+#parse audio:not([controls]) {
+    display: none;
+}
+
+#parse iframe {
+    border: none;
+}
+
+/* HR */
+#parse hr {
+    border: 1px inset;
+    color: gray;
+    height: 1px;
+}
+
+/* Summary/Details */
+#parse details {
+    display: block;
+}
+
+#parse summary {
+    display: list-item;
+    cursor: pointer;
+}

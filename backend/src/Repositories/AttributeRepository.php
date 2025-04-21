@@ -9,6 +9,7 @@ class AttributeRepository extends AbstractRepository
     public  function findAll(?string $productId = null): array
     {
         if ($productId === null) {
+            echo "Product ID is null";
             throw new \InvalidArgumentException("Product ID must be provided.");
         }
 

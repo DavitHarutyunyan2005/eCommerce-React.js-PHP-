@@ -63,11 +63,12 @@ class CreateTables
         $productsTable->addColumn('name', Types::STRING, ['length' => 255]);
         $productsTable->addColumn('description', Types::TEXT, ['notnull' => false]);
         $productsTable->addColumn('category', Types::STRING, ['length' => 255]);
-        $productsTable->addColumn('category_id', Types::GUID); // Foreign key to categories
+        $productsTable->addColumn('category_id', Types::GUID); 
         $productsTable->addColumn('inStock', Types::BOOLEAN, ['default' => true]);
         $productsTable->addColumn('brand', Types::STRING, ['length' => 255]);
+        $productsTable->addColumn('madeFor', Types::STRING, ['length' => 255]);
         $productsTable->setPrimaryKey(['id']);
-        $productsTable->addIndex(['category_id'], 'idx_category_id'); // foreign key to categories
+        $productsTable->addIndex(['category_id'], 'idx_category_id'); 
 
         $productsTable->addForeignKeyConstraint(
             'categories',
@@ -143,7 +144,7 @@ class CreateTables
     {
         $orderItemsTable = $schema->createTable('order_items');
         $orderItemsTable->addColumn('id', Types::INTEGER, ['autoincrement' => true]);
-        $orderItemsTable->addColumn('order_id', Types::STRING, ['length' => 255, 'notnull' => true]);
+        $orderItemsTable->addColumn('order_id', Types::INTEGER, ['length' => 255, 'notnull' => true]);
         $orderItemsTable->addColumn('product_id', Types::STRING, ['length' => 255, 'notnull' => true]);
         $orderItemsTable->addColumn('price_id', Types::STRING, ['length' => 255, 'notnull' => true]);
         $orderItemsTable->addColumn('attribute_item_id', Types::STRING, ['length' => 255, 'notnull' => true]);

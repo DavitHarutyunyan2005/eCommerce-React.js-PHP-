@@ -10,6 +10,7 @@ class GalleryRepository extends AbstractRepository
     public function findAll(?string $productId = null): array
     {
         if ($productId === null) {
+            echo "Product ID is null";
             throw new \InvalidArgumentException("Product ID must be provided.");
         }
 
@@ -19,6 +20,8 @@ class GalleryRepository extends AbstractRepository
             ->where('g.product_id = :product_id')
             ->setParameter('product_id', $productId);
 
-        return $query->fetchAllAssociative();
+        $results = $query->fetchAllAssociative();
+
+        return array_column($results, 'image_url');
     }
 }
