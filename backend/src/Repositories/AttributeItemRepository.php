@@ -15,7 +15,7 @@ class AttributeItemRepository extends AbstractRepository
 
         try {
             $query = $this->db->createQueryBuilder()
-                ->select('a.value, a.displayValue')
+                ->select('a.value, a.displayValue, a.selected')
                 ->from($this->table, 'a')
                 ->where('attribute_id = :attributeId')
                 ->setParameter('attributeId', $attributeId);

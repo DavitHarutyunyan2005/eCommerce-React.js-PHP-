@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database\Migrations;
+namespace App\Database\Migration;
 
 use App\Database\DatabaseConnection;
 use Doctrine\DBAL\Schema\Schema;
@@ -98,6 +98,7 @@ class CreateTables
         $attributeItemsTable->addColumn('attribute_id', Types::STRING, ['length' => 255]);
         $attributeItemsTable->addColumn('value', Types::STRING, ['length' => 255]);
         $attributeItemsTable->addColumn('displayValue', Types::STRING, ['length' => 255]);
+        $attributeItemsTable->addColumn('selected', Types::BOOLEAN, ['default' => false]);
         $attributeItemsTable->setPrimaryKey(['id']);
         $attributeItemsTable->addIndex(['attribute_id'], 'idx_attribute_id'); // foreign key to attributes
 

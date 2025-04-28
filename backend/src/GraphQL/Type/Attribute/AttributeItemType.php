@@ -14,6 +14,7 @@ class AttributeItemType extends ObjectType
             'fields' => [
                 'displayValue' => Type::string(),
                 'value' => Type::string(),
+                'selected' => Type::boolean(),
                 'id' =>  Type::string()
             ]
         ]);

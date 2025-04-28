@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database\Migrations;
+namespace App\Database\Migration;
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 

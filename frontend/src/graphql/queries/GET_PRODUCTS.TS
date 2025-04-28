@@ -14,6 +14,7 @@ export const GET_PRODUCTS = gql`
 				items {
 					displayValue
 					value
+					selected
 				}
 				name
 				type

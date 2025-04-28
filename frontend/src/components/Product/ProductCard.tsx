@@ -3,27 +3,42 @@ import { Product } from '../../types/ProductType';
 import { FaShoppingCart } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
+import { useCart } from '../../context/CartContext';
+import { OrderProduct } from '../../types/OrderProductType';
+import { toKebabCase } from '../../utils/stringUtils';
 
 interface ProductCardProps {
-    product: Product;
+    product: Product | OrderProduct;
 }
 
-
-
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+
+    const { addToCart, itemInCartWithoutAttributes } = useCart();
+
     const navigate = useNavigate();
 
     const goToDetails = () => {
-        navigate(`/product/${product.id}`, {
+        navigate(`/${product.madeFor.toLowerCase()}/product/${product.id}`, {
             state: { product },
         });
     };
 
+    const handleAddToCart = (e: React.MouseEvent, product: Product | OrderProduct) => {
+        e.stopPropagation();
+        addToCart(product);
+    }
+
     const price = product.prices[0];
 
     return (
-        <div className="relative w-64 bg-white rounded-lg overflow-hidden transition-shadow duration-300 hover:shadow-lg group cursor-pointer"
-            onClick={goToDetails}>
+        <div
+            className={
+                "relative w-64 bg-white rounded-lg overflow-hidden " +
+                "transition-shadow duration-300 hover:shadow-lg group cursor-pointer"
+            }
+            onClick={goToDetails}
+            data-testid={`product-card-${toKebabCase(product.name)}`}
+        >
             <div className="relative">
                 <img
                     src={product.gallery[0]}
@@ -44,11 +59,18 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 )}
 
                 {/* Cart icon on image border bottom-right */}
-                {product.inStock && (<div className="absolute bottom-0 right-8 translate-x-1/2 translate-y-1/2 group-hover:opacity-100 opacity-0 transition-opacity duration-300 ">
-                    <button className="bg-green-500 text-white p-2 rounded-full shadow-md cursor-pointer">
-                        <FaShoppingCart size={20} />
-                    </button>
-                </div>)}
+                {product.inStock && (
+                    <div className="absolute bottom-0 right-8 translate-x-1/2 translate-y-1/2 group-hover:opacity-100 opacity-0 transition-opacity duration-300 ">
+                        <button onClick={(e) => handleAddToCart(e, product)} className="bg-green-500 text-white p-2 rounded-full shadow-md cursor-pointer">
+                            <FaShoppingCart size={20} />
+                        </button>
+                        {/* badge of the quantity of the product already in cart */}
+                        {itemInCartWithoutAttributes(product) > 0 && (
+                            <span className="absolute -top-1 -right-1.5 bg-black text-white text-xs font-bold rounded-full w-4.5 h-4.5 flex items-center justify-center text-center">
+                                {itemInCartWithoutAttributes(product)}
+                            </span>
+                        )}
+                    </div>)}
             </div>
 
             <div className="p-4">

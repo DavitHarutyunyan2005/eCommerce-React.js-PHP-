@@ -1,4 +1,22 @@
-/*  THOSE ARE THE DEFAULT CSS STYLES FOR HTML ELEMENTS.
+.scrollable {
+    scrollbar-width: thin;
+    scrollbar-color: #b9b7b7 #f1f1f1;
+}
+
+.scrollable::-webkit-scrollbar {
+    width: 3px;
+}
+
+.scrollable::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    border-radius: 6px;
+}
+
+/*  THOSE BELOW ARE THE DEFAULT CSS STYLES FOR HTML ELEMENTS.
     I'M APPLYING THIS TO THE PARAGRAPH THAT 
     IS MEANT TO PARSE THE HTML, SINCE TAILWIND
     CHANGES THE STYLE OF HTML ELEMENTS (PREFLIGHT) */

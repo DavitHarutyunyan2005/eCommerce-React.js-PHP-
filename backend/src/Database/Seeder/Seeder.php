@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database\Seeders;
+namespace App\Database\Seeder;
 
 use App\Database\DatabaseConnection;
 use Exception;

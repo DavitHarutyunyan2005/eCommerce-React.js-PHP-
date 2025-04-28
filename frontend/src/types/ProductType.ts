@@ -9,7 +9,7 @@ export interface Product {
     id: string;
     name: string;
     type: string;
-    items: { id: string; value: string; displayValue: string }[];
+    items: { id: string; value: string; displayValue: string, selected: boolean }[];
   }[];
   prices: {
     amount: number;

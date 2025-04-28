@@ -3,13 +3,16 @@ import { NavLink, useLocation } from 'react-router-dom';
 import BrandIcon from '../images/BrandIcon.png';
 import EmptyCart from '../images/EmptyCart.png';
 import clsx from 'clsx';
+import { useCart } from '../context/CartContext';
+
 
 const Header: React.FC = () => {
     const [underlineStyle, setUnderlineStyle] = useState<{
         left: number;
         width: number;
     }>({ left: 0, width: 0 });
-    
+
+    const { cart, isCartOpen, setIsCartOpen } = useCart();
     const navRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
     const updateUnderline = (index: number) => {
@@ -31,11 +34,14 @@ const Header: React.FC = () => {
                 updateUnderline(activeIndex);
             }
         });
-    }, [location.pathname]); 
-    
+    }, [location.pathname]);
+
+
     return (
-        <header className="bg-white flex justify-between items-center p-4">
-            <nav className="relative flex gap-6 p-4 text-lg">
+        <header className={clsx("bg-white flex justify-between",
+            "items-center sticky top-0 z-50 px-14")}>
+            {/* NAVBAR */}
+            <nav className="flex gap-6 p-6 text-lg">
                 <NavLink
                     to="/women"
                     className={({ isActive }) =>
@@ -43,7 +49,7 @@ const Header: React.FC = () => {
                     }
                     onClick={() => updateUnderline(0)}
                     ref={(el) => {
-                        navRefs.current[0] = el; 
+                        navRefs.current[0] = el;
                     }}
                     data-testid={location.pathname === '/women' ? 'active-category-link' : 'category-link'}
                 >
@@ -56,7 +62,7 @@ const Header: React.FC = () => {
                     }
                     onClick={() => updateUnderline(1)}
                     ref={(el) => {
-                        navRefs.current[1] = el; 
+                        navRefs.current[1] = el;
                     }}
                     data-testid={location.pathname === '/men' ? 'active-category-link' : 'category-link'}
                 >
@@ -69,7 +75,7 @@ const Header: React.FC = () => {
                     }
                     onClick={() => updateUnderline(2)}
                     ref={(el) => {
-                        navRefs.current[2] = el; 
+                        navRefs.current[2] = el;
                     }}
                     data-testid={location.pathname === '/kids' ? 'active-category-link' : 'category-link'}
                 >
@@ -84,11 +90,22 @@ const Header: React.FC = () => {
                     }}
                 />
             </nav>
+            {/* GREEN BUTTON */}
             <button>
                 <img src={BrandIcon} alt="Logo" width={41} height={41} className="mx-auto" />
             </button>
-            <button data-testid='cart-btn'>
+            {/* CART BUTTON */}
+            <button 
+                data-testid="cart-btn" 
+                className="relative cursor-pointer"
+                onClick={() => setIsCartOpen(!isCartOpen)}
+            >
                 <img src={EmptyCart} alt="Cart" width={20} height={20} className="mx-auto" />
+                {cart.length > 0 && (
+                    <span className="absolute -top-1.5 -right-2 bg-black text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center text-center">
+                        {cart.length}
+                    </span>
+                )}
             </button>
         </header>
     );

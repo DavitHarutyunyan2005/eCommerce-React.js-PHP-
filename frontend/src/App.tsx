@@ -12,8 +12,10 @@ const App: FC = () => {
         <Route path="/" element={<Navigate to="/women" replace />} />
         <Route path="/women" element={<ProductListingPage category="clothes" madeFor="Women" />} />
         <Route path="/men" element={<ProductListingPage category="clothes" madeFor="Men" />} />
-        <Route path="/kids" element={<ProductListingPage category="tech" madeFor="All" />} />
-        <Route path="/product/:productId" element={<ProductDetailsPage />} />
+        <Route path="/kids" element={<ProductListingPage category="tech" madeFor="Kids" />} />
+        <Route path="/women/product/:productId" element={<ProductDetailsPage />} />
+        <Route path="/men/product/:productId" element={<ProductDetailsPage />} />
+        <Route path="/kids/product/:productId" element={<ProductDetailsPage />} />
       </Routes>
     </>
   );

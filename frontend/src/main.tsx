@@ -5,13 +5,16 @@ import App from './App'
 import './index.css'
 import { ApolloProvider } from '@apollo/client'
 import client from './apolloClient';
+import { CartProvider } from './context/CartContext'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ApolloProvider client={client}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <CartProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </CartProvider>
     </ApolloProvider>
   </StrictMode>
 )
