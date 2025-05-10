@@ -6,13 +6,12 @@ use App\Database\DatabaseConnection;
 use App\GraphQL\Type\Attribute\AttributeItemType;
 use App\GraphQL\Type\Attribute\AttributeType;
 use App\GraphQL\Type\CategoryType;
+use App\GraphQL\Type\Order\ProductResponseType;
 use App\GraphQL\Type\Price\CurrencyType;
-use App\GraphQL\Type\Order\OrderAttributeType;
-use App\GraphQL\Type\Order\OrderProductType;
 use App\GraphQL\Type\Order\OrderResponseType;
 use App\GraphQL\Type\Price\PriceType;
-use App\GraphQL\Type\Product\ProductInputType;
-use App\GraphQL\Type\Product\ProductType;
+use App\GraphQL\Type\Order\ProductInputType;
+use App\GraphQL\Type\ProductType;
 use App\GraphQL\Type\QueryType;
 use App\Repositories\AttributeItemRepository;
 use App\Repositories\AttributeRepository;
@@ -53,11 +52,10 @@ class Server
             $priceType = new PriceType($currencyType);
             $categoryType = new CategoryType();
             $attributeType = new AttributeType($attributeItemRepository, $attributeItemType);
-            $orderAttributeType = new OrderAttributeType($attributeItemType, $attributeItemRepository);
             $productType = new ProductType($attributeType, $attributeRepository, $priceType, $pricesRepository, $galleryRepository);
-            $orderProductType = new OrderProductType($orderAttributeType, $attributeRepository, $priceType);
-            $orderResponseType = new OrderResponseType($orderProductType);
-            $productInputType = new ProductInputType($priceType, $orderAttributeType);
+            $productInputType = new ProductInputType();
+            $productResponseType = new ProductResponseType();
+            $orderResponseType = new OrderResponseType($productResponseType);
 
             $mutationType = new ObjectType([
                 'name' => 'Mutation',
@@ -65,7 +63,7 @@ class Server
                     'insertOrder' => [
                         'type' => $orderResponseType,
                         'args' => [
-                            'products' => Type::nonNull(Type::listOf($productInputType))
+                            'products' => Type::nonNull(Type::listOf($productInputType)),
                         ],
                         'resolve' => static function ($root, $args) use ($orderRepository) {
                             return $orderRepository->insertOrder($args['products']);
@@ -73,6 +71,7 @@ class Server
                     ],
                 ],
             ]);
+
 
             $queryType = new QueryType($categoryType, $categoryRepository, $productType, $productRepository);
             $schema = new Schema((new SchemaConfig())->setQuery($queryType)->setMutation($mutationType));
@@ -97,16 +96,19 @@ class Server
 
             $result = GraphQLBase::executeQuery($schema, $query, $rootValue, null, $variableValues);
             $output = $result->toArray();
+
             if (isset($output['errors'])) {
-                foreach ($output['errors'] as $error) {
+                foreach ($output['errors'] as &$error) { 
                     if (isset($error['extensions']['exception']['message'])) {
                         $error['message'] = $error['extensions']['exception']['message'];
                     }
                 }
+                unset($error); 
             }
 
             header('Content-Type: application/json');
             echo json_encode($output);
+
             exit;
         } catch (Throwable $e) {
             header('Content-Type: application/json');
@@ -118,4 +120,4 @@ class Server
             exit;
         }
     }
-} 
+}

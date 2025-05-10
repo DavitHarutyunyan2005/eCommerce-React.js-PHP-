@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { FC } from 'react';
-import ProductListingPage from './components/Product/ProductListingPage.tsx';
-import ProductDetailsPage from './components/Product/ProductDetailsPage.tsx';
-import Header from './components/Header.tsx';
+import ProductListingPage from './pages/ProductListingPage.tsx';
+import ProductDetailsPage from './pages/ProductDetailsPage.tsx';
+import Header from './pages/Header.tsx';
 
 const App: FC = () => {
   return (

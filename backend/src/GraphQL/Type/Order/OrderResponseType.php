@@ -8,7 +8,7 @@ use GraphQL\Type\Definition\Type;
 class OrderResponseType extends ObjectType
 {
     public function __construct(
-        OrderProductType $orderProductType
+        ProductResponseType $productResponseType,
     ) {
         parent::__construct([
             'name' => 'OrderResponse',
@@ -16,7 +16,7 @@ class OrderResponseType extends ObjectType
                 'success' => Type::nonNull(Type::boolean()),
                 'orderRef' => Type::string(),
                 'message' => Type::string(),
-                'products' => Type::listOf($orderProductType),
+                'products' => Type::listOf($productResponseType),
             ]
         ]);
     }

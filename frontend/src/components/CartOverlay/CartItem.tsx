@@ -2,7 +2,7 @@ import React from 'react';
 import { OrderProduct } from '../../types/OrderProductType';
 import { useCart } from '../../context/CartContext';
 import clsx from 'clsx';
-import { toKebabCase } from '../../utils/stringUtils';
+import { toKebabCase, truncateString } from '../../utils/stringUtils';
 
 interface CartItemProps {
     product: OrderProduct;
@@ -16,8 +16,8 @@ export const CartItem: React.FC<CartItemProps> = ({ product }) => {
         <div className="flex justify-between gap-2 border-b p-2">
             {/* DETAILS */}
             <div className='flex flex-col justify-between '>
-                <h2 className="text-lg font-semibold">{product.name}</h2>
-                <p className="text-md font-medium">${product.prices[0].amount.toFixed(2)}</p>
+                <h2 className="text-lg font-raleway">{truncateString(product.name, 20)}</h2>
+                <p className="text-md font-bold font-raleway">${product.prices[0].amount.toFixed(2)}</p>
 
                 {/* ATTRIBUTES (color, size, etc.) */}
                 <div>
@@ -29,7 +29,7 @@ export const CartItem: React.FC<CartItemProps> = ({ product }) => {
                                     key={index}
                                     data-testid={`cart-item-attribute-${toKebabCase(attr.name)}`}
                                 >
-                                    <span>{attr.name}:</span>
+                                    <span className='font-raleway'>{attr.name}:</span>
                                     <div className=''>
                                         {attr.items.map((item, i) => (
                                             <button
@@ -53,7 +53,7 @@ export const CartItem: React.FC<CartItemProps> = ({ product }) => {
                                     key={index}
                                     data-testid={`cart-item-attribute-${toKebabCase(attr.name)}`}
                                 >
-                                    <span>Color:</span>
+                                    <span className='font-raleway'>Color:</span>
                                     <div className='flex gap-2'>
                                         {attr.items.map((item, i) => (
                                             <div
@@ -80,7 +80,7 @@ export const CartItem: React.FC<CartItemProps> = ({ product }) => {
                     onClick={() => addToCart(product)}
                     data-testid='cart-item-amount-increase'
                 >+</button>
-                <span data-testid='cart-item-amount'>{product.quantity}</span>
+                <span data-testid='cart-item-amount font-raleway'>{product.quantity}</span>
                 <button
                     className="border px-2 cursor-pointer"
                     onClick={() => removeFromCart(product)}

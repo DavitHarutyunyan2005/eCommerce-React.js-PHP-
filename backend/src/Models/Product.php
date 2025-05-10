@@ -2,24 +2,26 @@
 
 namespace App\Models;
 
-use App\Models\Attribute\SwatchAttribute;
-use App\Models\Attribute\TextAttribute;
-use App\Models\Category\ClothesCategory;
-use App\Models\Category\TechCategory;
+use App\Models\Category\AbstractCategory;
+use App\Models\MadeFor\AbstractMadeFor;
+use App\Models\Attribute\AbstractAttribute;
+use App\Models\Price;
 
-abstract class Product
+class Product
 {
-    protected string $id;
-    protected string $name;
-    protected string $description;
-    protected bool $inStock;
-    protected array $gallery;
-    protected float $amount;
-    protected string $currency_label;
-    protected string $currency_symbol;
-    protected string $brand;
-    protected string $madeFor; 
-
+    private string $id;
+    private string $name;
+    private bool $inStock;
+    /** @var string[] */
+    private array $gallery;
+    private string $description;
+    private AbstractCategory $category;
+    /** @var AbstractAttribute[] */
+    private array $attributes = [];
+    /** @var Price[] */
+    private array $prices;
+    private string $brand;
+    private AbstractMadeFor $madeFor;
 
     public function __construct(
         string $id,
@@ -27,28 +29,25 @@ abstract class Product
         bool $inStock,
         array $gallery,
         string $description,
-        float $amount,
-        string $currency_label,
-        string $currency_symbol,
+        AbstractCategory $category,
+        array $attributes,
+        array $prices,
         string $brand,
-        string $madeFor
+        AbstractMadeFor $madeFor
     ) {
         $this->id = $id;
         $this->name = $name;
-        $this->description = $description;
         $this->inStock = $inStock;
         $this->gallery = $gallery;
-        $this->amount = $amount;
-        $this->currency_label = $currency_label;
-        $this->currency_symbol = $currency_symbol;
+        $this->description = $description;
+        $this->category = $category;
+        $this->attributes = $attributes;
+        $this->prices = $prices;
         $this->brand = $brand;
         $this->madeFor = $madeFor;
     }
 
     // GETTERS:
-    abstract public function getCategory(): ClothesCategory|TechCategory;
-    abstract public function getAttribute(): SwatchAttribute|TextAttribute;
-
     public function getId(): string
     {
         return $this->id;
@@ -69,33 +68,34 @@ abstract class Product
         return $this->inStock;
     }
 
-    public function getGallery(): array
-    {
-        return $this->gallery;
-    }
-
-    public function getAmount(): float
-    {
-        return $this->amount;
-    }
-
-    public function getCurrencyLabel(): string
-    {
-        return $this->currency_label;
-    }
-
-    public function getCurrencySymbol(): string
-    {
-        return $this->currency_symbol;
-    }
-
     public function getBrand(): string
     {
         return $this->brand;
     }
 
+    public function getGallery(): array
+    {
+        return $this->gallery;
+    }
+
+    public function getCategory(): AbstractCategory
+    {
+        return $this->category;
+    }
+
+    public function getAttributes(): array
+    {
+        return $this->attributes;
+    }
+
+    public function getPrices(): array
+    {
+        return $this->prices;
+    }
+
+
     public function getMadeFor(): string
     {
-        return $this->madeFor;
+        return $this->madeFor->getName();
     }
 }

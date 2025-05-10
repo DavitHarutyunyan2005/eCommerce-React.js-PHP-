@@ -9,13 +9,12 @@ class AttributeItemRepository extends AbstractRepository
     public function findAll(?string $attributeId = null): array
     {
         if ($attributeId === null) {
-            echo "Attribute ID is null";
             throw new \InvalidArgumentException("Attribute ID must be provided.");
         }
 
         try {
             $query = $this->db->createQueryBuilder()
-                ->select('a.value, a.displayValue, a.selected')
+                ->select('a.value, a.displayValue, a.id')
                 ->from($this->table, 'a')
                 ->where('attribute_id = :attributeId')
                 ->setParameter('attributeId', $attributeId);
@@ -24,8 +23,7 @@ class AttributeItemRepository extends AbstractRepository
 
             return $result ?: [];
         } catch (\Exception $e) {
-            //  $this->logger->error($e->getMessage());
-            return [];
+            throw new \RuntimeException("Failed to fetch attribute items: " . $e->getMessage());
         }
     }
 
@@ -42,8 +40,7 @@ class AttributeItemRepository extends AbstractRepository
 
             return $result ?: [];
         } catch (\Exception $e) {
-            //  $this->logger->error($e->getMessage());
-            return [];
+            throw new \RuntimeException("Failed to fetch attribute item by ID: " . $e->getMessage());
         }
     }
 }

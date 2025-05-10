@@ -12,6 +12,7 @@ class PriceType extends ObjectType
         parent::__construct([
             'name' => 'Price',
             'fields' => [
+                'id' => Type::nonNull(Type::string()),
                 'amount' => Type::float(),
                 'currency' => $currencyType
                 ]

@@ -17,7 +17,7 @@ class OrderItemRepository
         $this->logger = $logger;
     }
 
-    public function insertOrderItem(array $orderItem): bool
+    public function insertOrderItem(int $orderId, array $orderItem): array
     {
         try {
             $query = $this->conn->createQueryBuilder()
@@ -26,19 +26,35 @@ class OrderItemRepository
                     'product_id' => ':product_id',
                     'order_id' => ':order_id',
                     'price_id' => ':price_id',
-                    'attribute_item_id' => ':attribute_item_id',
                     'quantity' => ':quantity'
                 ])
-                ->setParameter('product_id', $orderItem['product_id'])
-                ->setParameter('order_id', $orderItem['order_id'])
-                ->setParameter('price_id', $orderItem['price_id'])
-                ->setParameter('attribute_item_id', $orderItem['attribute_item_id'])
+                ->setParameter('product_id', $orderItem['productId'])
+                ->setParameter('order_id', $orderId)
+                ->setParameter('price_id', $orderItem['priceId'])
                 ->setParameter('quantity', $orderItem['quantity']);
 
-            return (bool) $query->executeStatement();
+            $query->executeStatement();
+
+            $orderItemId = (int) $this->conn->lastInsertId();
+
+            if (isset($orderItem['attributeItemIds']) && is_array($orderItem['attributeItemIds']) && count($orderItem['attributeItemIds']) > 0) {
+                foreach ($orderItem['attributeItemIds'] as $attributeItemId) {
+                    $this->conn->insert('order_attributes', [
+                        'order_item_id' => $orderItemId,
+                        'attribute_item_id' => $attributeItemId,
+                    ]);
+                }
+            }
+            
+            return [
+                'productId' => $orderItem['productId'],
+                'priceId' => $orderItem['priceId'],
+                'attributeItemIds' => $orderItem['attributeItemIds'] ?? [],
+                'quantity' => $orderItem['quantity'],
+            ];
         } catch (Exception $e) {
             $this->logger->error('Error inserting order item: ' . $e->getMessage());
-            return false;
+            throw $e;
         }
     }
 }

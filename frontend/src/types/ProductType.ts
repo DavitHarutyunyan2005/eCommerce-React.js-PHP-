@@ -9,9 +9,10 @@ export interface Product {
     id: string;
     name: string;
     type: string;
-    items: { id: string; value: string; displayValue: string, selected: boolean }[];
+    items: { id: string; value: string; displayValue: string, selected?: boolean }[];
   }[];
   prices: {
+    id: string;
     amount: number;
     currency: {
       label: string;
@@ -19,5 +20,5 @@ export interface Product {
     };
   }[];
   brand: string;
-  madeFor: "Men" | "Women" | "Kids" | "All";
+  madeFor: "Men" | "Women" | "Kids";
 }

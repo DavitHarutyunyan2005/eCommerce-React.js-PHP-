@@ -9,7 +9,6 @@ class AttributeRepository extends AbstractRepository
     public  function findAll(?string $productId = null): array
     {
         if ($productId === null) {
-            echo "Product ID is null";
             throw new \InvalidArgumentException("Product ID must be provided.");
         }
 
@@ -24,9 +23,7 @@ class AttributeRepository extends AbstractRepository
 
             return $result ?: [];
         } catch (\Exception $e) {
-            // Log the error message if you have a logger set up
-            // $this->logger->error($e->getMessage());
-            return [];
+            throw new \RuntimeException("Error fetching attributes: " . $e->getMessage(), 0, $e);
         }
     }
 }

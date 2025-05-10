@@ -2,11 +2,8 @@
 
 namespace App\Models\Category;
 
-use App\Models\Category;
-
-class ClothesCategory extends Category {
-
+class ClothesCategory extends AbstractCategory {
     public function __construct() {
-        parent::__construct('Clothes');
+        parent::__construct('clothes');
     }
 }

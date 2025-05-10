@@ -2,12 +2,9 @@
 
 namespace App\Models\Attribute;
 
-use App\Models\Attribute;
-
-class TextAttribute extends Attribute {
+class TextAttribute extends AbstractAttribute {
 
     protected string $type = 'text';
-    protected string $name = 'Size';
 
     public function formatValue($value): string
     {

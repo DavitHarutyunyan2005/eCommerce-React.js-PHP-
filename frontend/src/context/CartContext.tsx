@@ -127,11 +127,11 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
                     : item
             );
         });
-        console.log('updateItemFromCart', product);
     }
 
     const clearCart = () => {
         setCart([]);
+        setIsCartOpen(false);
     };
 
     const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);

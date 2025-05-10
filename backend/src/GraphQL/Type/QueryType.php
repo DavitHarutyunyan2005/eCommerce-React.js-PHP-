@@ -2,7 +2,6 @@
 
 namespace App\GraphQL\Type;
 
-use App\GraphQL\Type\Product\ProductType;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use App\Repositories\CategoryRepository;
@@ -30,16 +29,7 @@ class QueryType extends ObjectType
                     'resolve' => function ($root, $args) use ($productRepository) {
                         return $productRepository->findAll();
                     }
-                ],
-                'product' => [
-                    'type' => $productType,
-                    'args' => [
-                        'id' => Type::nonNull(Type::string()), 
-                    ],
-                    'resolve' => function ($root, $args) use ($productRepository) {
-                        return $productRepository->findById($args['id']);
-                    }
-                ],
+                ]
             ]
         ]);
     }

@@ -2,12 +2,10 @@
 
 namespace App\Models\Attribute;
 
-use App\Models\Attribute;
 
-class SwatchAttribute extends Attribute
+class SwatchAttribute extends AbstractAttribute
 {
     protected string $type = 'swatch';
-    protected string $name = 'Color';
 
     public function formatValue($value): string
     {

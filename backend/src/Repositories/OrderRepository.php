@@ -5,6 +5,8 @@ namespace App\Repositories;
 use Doctrine\DBAL\Connection;
 use Psr\Log\LoggerInterface;
 use Exception;
+use DateTimeImmutable;
+use DateTimeZone;
 
 class OrderRepository
 {
@@ -22,43 +24,49 @@ class OrderRepository
         $this->orderItemRepository = $orderItemRepository;
     }
 
-    public function insertOrder(array $orderItems)
+    public function insertOrder(array $orderItems): array
     {
         $orderRef = 'ORD-' . time() . '-' . strtoupper(bin2hex(random_bytes(4)));
-
+        $tz = new DateTimeZone('Asia/Yerevan');
+        $now = (new DateTimeImmutable('now', $tz))->format('Y-m-d H:i:s');
         $this->conn->beginTransaction();
 
         try {
-            // Insert the order
-            $query = $this->conn->createQueryBuilder()
-                ->insert('orders')
-                ->values([
-                    'order_ref' => ':order_ref',
-                    'created_at' => ':created_at',
-                ])
-                ->setParameter('order_ref', $orderRef)
-                ->setParameter('created_at', (new \DateTimeImmutable())->format('Y-m-d H:i:s'));
+            // Inserting the order
+            $this->conn->insert('orders', [
+                'order_ref' => $orderRef,
+                'created_at' => $now,
+            ]);
 
-            $query->executeStatement();
+            // Getting the inserted order ID
+            $orderId = (int) $this->conn->lastInsertId();
 
-            // Insert each order item
+            // Inserting each order item
             foreach ($orderItems as $orderItem) {
-                $this->orderItemRepository->insertOrderItem($orderItem);
+                try {
+                    $this->orderItemRepository->insertOrderItem($orderId, $orderItem);
+                } catch (Exception $e) {
+                    $this->logger->error('Failed to insert order item', ['item' => $orderItem, 'error' => $e->getMessage()]);
+                    throw $e;
+                }
             }
 
             $this->conn->commit();
 
             return [
                 'success' => true,
-                'order_ref' => $orderRef,
+                'orderRef' => $orderRef,
+                'message' => 'Order inserted successfully.',
                 'products' => $orderItems,
-                'message' => 'Order inserted successfully.'
             ];
-
         } catch (Exception $e) {
             $this->conn->rollBack();
+            $this->logger->error('Order insert failed: ' . $e->getMessage());
 
-            return $this->logger->error('Order insert failed: ' . $e->getMessage());
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+            ];
         }
     }
 }

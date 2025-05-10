@@ -12,10 +12,9 @@ class AttributeItemType extends ObjectType
         parent::__construct([
             'name' => 'Attribute',
             'fields' => [
+                'id' =>  Type::string(),
                 'displayValue' => Type::string(),
                 'value' => Type::string(),
-                'selected' => Type::boolean(),
-                'id' =>  Type::string()
             ]
         ]);
     }

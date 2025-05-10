@@ -21,8 +21,8 @@ class AttributeType extends ObjectType
                         return $attributeItemRepository->findAll($attribute['id']);
                     }
                 ],
-                'name' => ['type' => Type::string()],
-                'type' => ['type' => Type::string()],
+                'name' => Type::string(),
+                'type' => Type::string(),
             ]
         ]);
     }

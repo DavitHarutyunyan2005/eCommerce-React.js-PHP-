@@ -15,14 +15,4 @@ abstract class AbstractRepository implements RepositoryInterface
 
     abstract public function findAll(?string $id = null): array;
 
-
-    public function save(array $data): void
-    {
-        $this->db->insert($this->table, $data);
-    }
-
-    public function delete(int $id): void
-    {
-        $this->db->delete($this->table, ['id' => $id]);
-    }
 }
