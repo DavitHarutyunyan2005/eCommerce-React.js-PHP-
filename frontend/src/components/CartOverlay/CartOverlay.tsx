@@ -18,7 +18,7 @@ export const CartOverlay: React.FC = () => {
     const handleInsertOrder = async () => {
         try {
 
-            const { data, errors } = await insertOrder({
+            const { errors } = await insertOrder({
                 variables: {
                     products: cart.map((product) => ({
                         productId: product.id,

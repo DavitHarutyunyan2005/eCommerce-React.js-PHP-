@@ -5,7 +5,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use App\GraphQL\Server;
 
 // Allowing CORS headers
-$allowedOrigins = ['http://localhost:5173']; // Your frontend URL
+$allowedOrigins = ['https://e-commerce-psi-lyart.vercel.app'];
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 
 // Checking if the origin is in the allowed origins

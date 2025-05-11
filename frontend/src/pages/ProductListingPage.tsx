@@ -4,7 +4,6 @@ import { GET_PRODUCTS } from '../graphql/queries/getProducts.ts';
 import ProductCard from '../components/ProductCard.tsx';
 import ProductCardSkeleton from '../skeletons/ProductCardSkeleton.tsx';
 import { useCart } from '../context/CartContext.tsx';
-import clsx from 'clsx';
 import { CartOverlay } from '../components/CartOverlay/CartOverlay.tsx';
 
 interface ProductListingPageProps {
