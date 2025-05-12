@@ -19,6 +19,7 @@ const ProductListingPage: React.FC<ProductListingPageProps> = ({ category, madeF
         (product: any) => product.category === category && product.madeFor === madeFor
     );
 
+console.log(error);
     return (
         <main className=''>
 

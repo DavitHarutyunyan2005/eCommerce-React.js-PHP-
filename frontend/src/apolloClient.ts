@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({
-    uri: 'http://davit-harutyunyan.iceiy.com/backend/public/',
+    uri: 'https://davit-ecommerce.store/api/',
     cache: new InMemoryCache(),
 });
 
