@@ -106,12 +106,9 @@ class Server
                 unset($error); 
             }
 
-            header('Content-Type: application/json');
             echo json_encode($output);
-
             exit;
         } catch (Throwable $e) {
-            header('Content-Type: application/json');
             echo json_encode([
                 'errors' => [
                     ['message' => $e->getMessage()]

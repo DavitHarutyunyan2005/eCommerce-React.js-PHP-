@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 const client = new ApolloClient({
-    uri: 'https://davit-ecommerce.store/api/',
+    uri: import.meta.env.VITE_GRAPHQL_API_URL,
     cache: new InMemoryCache(),
 });
 
