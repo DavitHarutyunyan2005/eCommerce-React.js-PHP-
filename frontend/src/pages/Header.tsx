@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import BrandIcon from '../assets/images/BrandIcon.png';
 import clsx from 'clsx';
-import { CategoriesNavbar } from '../components/CategoriesNavBar';
+import { CategoriesNavbar } from '../components/CategoriesNavbar';
 
 const Header: React.FC = () => {
     const [underlineStyle, setUnderlineStyle] = useState<{
@@ -98,7 +98,9 @@ const Header: React.FC = () => {
                 <img src={BrandIcon} alt="Logo" width={41} height={41} className="mx-auto" />
             </div>
 
+            {/* Categories Navbar */}
             <CategoriesNavbar/>
+
         </header>
     );
 };
