@@ -1,6 +1,5 @@
 export function toKebabCase(str: string): string {
     return str
-        .replace(/([a-z])([A-Z])/g, '$1-$2') // adding a hyphen between camelCase words
         .replace(/\s+/g, '-')                 // replacing spaces with hyphens
         .toLowerCase();                       // making everything lowercase
 }

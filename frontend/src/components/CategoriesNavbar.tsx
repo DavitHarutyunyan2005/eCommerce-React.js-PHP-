@@ -26,6 +26,7 @@ export const CategoriesNavbar = () => {
                                 isActive ? 'text-[#5ECE7B]' : 'text-gray-500'
                             )
                         }
+                        data-testid={location.pathname === '/all' ? 'active-category-link' : 'category-link'}
                     >
                         All
                     </NavLink>
@@ -37,6 +38,7 @@ export const CategoriesNavbar = () => {
                                 isActive ? 'text-[#5ECE7B]' : 'text-gray-500'
                             )
                         }
+                        data-testid={location.pathname === '/clothes' ? 'active-category-link' : 'category-link'}
                     >
                         Clothes
                     </NavLink>
@@ -48,6 +50,7 @@ export const CategoriesNavbar = () => {
                                 isActive ? 'text-[#5ECE7B]' : 'text-gray-500'
                             )
                         }
+                        data-testid={location.pathname === '/tech' ? 'active-category-link' : 'category-link'}
                     >
                         Tech
                     </NavLink>
