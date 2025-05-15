@@ -9,7 +9,7 @@ const App: FC = () => {
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<Navigate to="/clothes" replace />} />
+        <Route path="/" element={<Navigate to="/clothes/women" replace />} />
 
         <Route path="/all" element={<ProductListingPage category="all" madeFor='all'/>} />
 
