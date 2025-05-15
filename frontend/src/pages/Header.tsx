@@ -52,7 +52,6 @@ const Header: React.FC = () => {
                         ref={(el) => {
                             navRefs.current[0] = el;
                         }}
-                        data-testid={location.pathname === '/clothes/women' ? 'active-category-link' : 'category-link'}
                     >
                         WOMEN
                     </NavLink>
@@ -65,7 +64,6 @@ const Header: React.FC = () => {
                         ref={(el) => {
                             navRefs.current[1] = el;
                         }}
-                        data-testid={location.pathname === '/clothes/men' ? 'active-category-link' : 'category-link'}
                     >
                         MEN
                     </NavLink>
@@ -78,7 +76,6 @@ const Header: React.FC = () => {
                         ref={(el) => {
                             navRefs.current[2] = el;
                         }}
-                        data-testid={location.pathname === '/clothes/kids' ? 'active-category-link' : 'category-link'}
                     >
                         KIDS
                     </NavLink>

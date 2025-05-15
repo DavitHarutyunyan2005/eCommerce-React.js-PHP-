@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa'; // Hamburger and close icons
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import EmptyCart from '../assets/images/EmptyCart.png';
 
@@ -9,6 +9,9 @@ export const CategoriesNavbar = () => {
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const { isCartOpen, setIsCartOpen, totalQuantity } = useCart();
+
+    const location = useLocation();
+    
 
     return (
         <div className="relative">
@@ -83,6 +86,7 @@ export const CategoriesNavbar = () => {
                             )
                         }
                         onClick={() => setIsMobileMenuOpen(false)}
+                        data-testid={location.pathname === '/all' ? 'active-category-link' : 'category-link'}
                     >
                         All
                     </NavLink>
@@ -95,6 +99,7 @@ export const CategoriesNavbar = () => {
                             )
                         }
                         onClick={() => setIsMobileMenuOpen(false)}
+                        data-testid={location.pathname === '/clothes' ? 'active-category-link' : 'category-link'}
                     >
                         Clothes
                     </NavLink>
@@ -107,6 +112,7 @@ export const CategoriesNavbar = () => {
                             )
                         }
                         onClick={() => setIsMobileMenuOpen(false)}
+                        data-testid={location.pathname === '/tech' ? 'active-category-link' : 'category-link'}
                     >
                         Tech
                     </NavLink>

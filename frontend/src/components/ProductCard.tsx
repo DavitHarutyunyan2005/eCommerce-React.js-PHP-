@@ -40,7 +40,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 "transition-shadow duration-300 hover:shadow-lg group cursor-pointer"
             }
             onClick={goToDetails}
-            data-testid={`product-card-${toKebabCase(product.name)}`}
+            data-testid={`product-${toKebabCase(product.name)}`}
         >
             <div className="relative">
                 <img
