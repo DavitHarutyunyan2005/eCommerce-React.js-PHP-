@@ -20,5 +20,5 @@ export interface Product {
     };
   }[];
   brand: string;
-  madeFor: "Men" | "Women" | "Kids";
+  madeFor: "men" | "women" | "kids" | "all";
 }

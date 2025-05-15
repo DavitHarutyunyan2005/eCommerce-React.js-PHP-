@@ -18,10 +18,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     const navigate = useNavigate();
 
     const goToDetails = () => {
-        navigate(`/${product.madeFor.toLowerCase()}/product/${product.id}`, {
-            state: { product },
-        });
+        const category = product.category.toLowerCase();
+        const madeForSegment = product.madeFor !== 'all' ? `/${product.madeFor.toLowerCase()}` : '';
+        const path = `/${category}${madeForSegment}/product/${product.id}`;
+
+        navigate(path, { state: { product } });
     };
+
 
     const handleAddToCart = (e: React.MouseEvent, product: Product | OrderProduct) => {
         e.stopPropagation();

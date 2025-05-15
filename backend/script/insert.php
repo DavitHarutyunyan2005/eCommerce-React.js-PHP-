@@ -31,28 +31,28 @@ try {
     $productRepository = new ProductRepository($conn);
 
     $prices = [
-        new Price(Guid::uuid4()->toString(), 30.00,  'USD', '$'),
+        new Price(Guid::uuid4()->toString(), 32.00,  'USD', '$'),
     ];
 
     $attributeColorItems = [
-        new AttributeItem(Guid::uuid4()->toString(), 'Green', '#BEBEBE'),
-        new AttributeItem(Guid::uuid4()->toString(), 'Black', '#000000'),
+        new AttributeItem(Guid::uuid4()->toString(), 'Green', '#006262'),
+        new AttributeItem(Guid::uuid4()->toString(), 'Red', '#F33131'),
     ];
 
     $attributeSizeItems = [
+        new AttributeItem(Guid::uuid4()->toString(), 'XS', ' Extra Small'),
         new AttributeItem(Guid::uuid4()->toString(), 'S', 'Small'),
         new AttributeItem(Guid::uuid4()->toString(), 'M', 'Medium'),
-        new AttributeItem(Guid::uuid4()->toString(), 'L', 'Large'),
-        new AttributeItem(Guid::uuid4()->toString(), 'XL', 'Extra Large'),
+        // new AttributeItem(Guid::uuid4()->toString(), 'XL', 'Extra Large'),
     ];
 
     $attributeData = [
-        [
-            'id' => Guid::uuid4()->toString(),
-            'name' => 'Color',
-            'type' => 'swatch',
-            'items' => $attributeColorItems
-        ],
+        // [
+        //     'id' => Guid::uuid4()->toString(),
+        //     'name' => 'Color',
+        //     'type' => 'swatch',
+        //     'items' => $attributeColorItems
+        // ],
         [
             'id' => Guid::uuid4()->toString(),
             'name' => 'Size',
@@ -62,20 +62,24 @@ try {
     ];
 
     $categoryClass = $categoryFactory->create('clothes');
-    $madeForClass = $madeForFactory->create('Men');
+    $madeForClass = $madeForFactory->create('Kids');
 
     $data = [
-        'id' => 'jackets-windbreaker-baseball',
-        'name' => "Jackets Windbreaker Baseball",
+        'id' => 'top-floral-skort-set',
+        'name' => "Top & Floral Skort Set",
         'inStock' => true,
         'gallery' => [
-            'https://m.media-amazon.com/images/I/31dNUnDaVQL._AC_SR400,400_.jpg'
+            'https://slimages.macysassets.com/is/image/MCY/products/5/optimized/31535745_fpx.tif?op_sharpen=1&wid=500&fit=fit,1&fmt=webp',
+            'https://slimages.macysassets.com/is/image/MCY/products/6/optimized/31535746_fpx.tif?op_sharpen=1&wid=500&fit=fit,1&fmt=webp',
+            'https://slimages.macysassets.com/is/image/MCY/products/7/optimized/31535747_fpx.tif?op_sharpen=1&wid=500&fit=fit,1&fmt=webp'
         ],
-        'description' => "MAGNIVIT Mens Jackets Windbreaker Baseball Bomber Flight Jacket Mens Winter Coats",
+        'description' => "Shirt: square neckline; front buttons; flutter sleeves; ruffled hem
+Skort: pulls on; allover floral print; inner shorts
+Top: cotton/polyester/elastane; skort: cotton",
         'category' => $categoryClass,
         'attributes' => $attributeData,
         'prices' => $prices,
-        'brand' => 'Magnivit',
+        'brand' => "Carter's",
         'madeFor' => $madeForClass
     ];
 

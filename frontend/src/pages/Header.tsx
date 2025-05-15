@@ -1,10 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import BrandIcon from '../assets/images/BrandIcon.png';
-import EmptyCart from '../assets/images/EmptyCart.png';
 import clsx from 'clsx';
-import { useCart } from '../context/CartContext';
-
+import { CategoriesNavbar } from '../components/CategoriesNavBar';
 
 const Header: React.FC = () => {
     const [underlineStyle, setUnderlineStyle] = useState<{
@@ -12,7 +10,7 @@ const Header: React.FC = () => {
         width: number;
     }>({ left: 0, width: 0 });
 
-    const { cart, isCartOpen, setIsCartOpen } = useCart();
+    // const { isCartOpen, setIsCartOpen, totalQuantity } = useCart();
     const navRefs = useRef<(HTMLAnchorElement | null)[]>([]);
 
     const updateUnderline = (index: number) => {
@@ -36,77 +34,71 @@ const Header: React.FC = () => {
         });
     }, [location.pathname]);
 
+    const isClothesPage = location.pathname.startsWith('/clothes');
 
     return (
-        <header className={clsx("bg-white flex justify-between",
-            "items-center sticky top-0 z-50 px-14")}>
-            {/* NAVBAR */}
-            <nav className="flex gap-6 p-6 text-lg">
-                <NavLink
-                    to="/women"
-                    className={({ isActive }) =>
-                        clsx(isActive && 'text-[#5ECE7B]', 'text-base font-raleway')
-                    }
-                    onClick={() => updateUnderline(0)}
-                    ref={(el) => {
-                        navRefs.current[0] = el;
-                    }}
-                    data-testid={location.pathname === '/women' ? 'active-category-link' : 'category-link'}
-                >
-                    WOMEN
-                </NavLink>
-                <NavLink
-                    to="/men"
-                    className={({ isActive }) =>
-                        clsx(isActive && 'text-[#5ECE7B]', 'text-base font-raleway')
-                    }
-                    onClick={() => updateUnderline(1)}
-                    ref={(el) => {
-                        navRefs.current[1] = el;
-                    }}
-                    data-testid={location.pathname === '/men' ? 'active-category-link' : 'category-link'}
-                >
-                    MEN
-                </NavLink>
-                <NavLink
-                    to="/kids"
-                    className={({ isActive }) =>
-                        clsx(isActive && 'text-[#5ECE7B]', 'text-base font-raleway')
-                    }
-                    onClick={() => updateUnderline(2)}
-                    ref={(el) => {
-                        navRefs.current[2] = el;
-                    }}
-                    data-testid={location.pathname === '/kids' ? 'active-category-link' : 'category-link'}
-                >
-                    KIDS
-                </NavLink>
+        <header className={clsx("bg-white flex justify-between items-center",
+            "sticky top-0 z-50 px-14 p-4")}>
 
-                <div
-                    className="absolute bottom-0 h-[2px] bg-[#5ECE7B] transition-all duration-300 ease-in-out"
-                    style={{
-                        left: `${underlineStyle.left - 10}px`,
-                        width: `${underlineStyle.width + 20}px`,
-                    }}
-                />
-            </nav>
-            {/* GREEN BUTTON */}
-            <button>
+            {/* CLOTHES NAVBAR */}
+            {isClothesPage &&
+                <nav className="flex justify-around  items-center gap-6 text-lg">
+                    <NavLink
+                        to="/clothes/women"
+                        className={({ isActive }) =>
+                            clsx(isActive && 'text-[#5ECE7B]', 'text-base font-raleway')
+                        }
+                        onClick={() => updateUnderline(0)}
+                        ref={(el) => {
+                            navRefs.current[0] = el;
+                        }}
+                        data-testid={location.pathname === '/clothes/women' ? 'active-category-link' : 'category-link'}
+                    >
+                        WOMEN
+                    </NavLink>
+                    <NavLink
+                        to="/clothes/men"
+                        className={({ isActive }) =>
+                            clsx(isActive && 'text-[#5ECE7B]', 'text-base font-raleway')
+                        }
+                        onClick={() => updateUnderline(1)}
+                        ref={(el) => {
+                            navRefs.current[1] = el;
+                        }}
+                        data-testid={location.pathname === '/clothes/men' ? 'active-category-link' : 'category-link'}
+                    >
+                        MEN
+                    </NavLink>
+                    <NavLink
+                        to="/clothes/kids"
+                        className={({ isActive }) =>
+                            clsx(isActive && 'text-[#5ECE7B]', 'text-base font-raleway')
+                        }
+                        onClick={() => updateUnderline(2)}
+                        ref={(el) => {
+                            navRefs.current[2] = el;
+                        }}
+                        data-testid={location.pathname === '/clothes/kids' ? 'active-category-link' : 'category-link'}
+                    >
+                        KIDS
+                    </NavLink>
+
+                    <div
+                        className="absolute bottom-0 h-[2px] bg-[#5ECE7B] transition-all duration-300 ease-in-out"
+                        style={{
+                            left: `${underlineStyle.left - 10}px`,
+                            width: `${underlineStyle.width + 20}px`,
+                        }}
+                    />
+                </nav>
+            }
+
+            {/* Logo */}
+            <div>
                 <img src={BrandIcon} alt="Logo" width={41} height={41} className="mx-auto" />
-            </button>
-            {/* CART BUTTON */}
-            <button 
-                data-testid="cart-btn" 
-                className="relative cursor-pointer"
-                onClick={() => setIsCartOpen(!isCartOpen)}
-            >
-                <img src={EmptyCart} alt="Cart" width={20} height={20} className="mx-auto" />
-                {cart.length > 0 && (
-                    <span className="absolute -top-1.5 -right-2 bg-black text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center text-center">
-                        {cart.length}
-                    </span>
-                )}
-            </button>
+            </div>
+
+            <CategoriesNavbar/>
         </header>
     );
 };

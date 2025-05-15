@@ -44,7 +44,7 @@ export const CartOverlay: React.FC = () => {
     
 
     return (
-        <div className="bg-white  mx-auto p-4 shadow-md scrollbar-hide">
+        <div data-testid="cart-overlay" className="bg-white  mx-auto p-4 shadow-md scrollbar-hide">
             <h1 className="text-xl font-semibold font-raleway mb-2">
                 <span className="font-bold">My Bag,</span> <span className='font-light'>{cart.length > 1 ? `${cart.length} items` : `${cart.length} item`}</span>
             </h1>

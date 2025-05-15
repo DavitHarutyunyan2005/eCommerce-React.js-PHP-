@@ -57,6 +57,8 @@ class Seeder
                 $product['category_id'] = $categoryId;
                 unset($product['category']);
 
+                $product['madeFor'] = strtolower($product['madeFor']);
+
                 $conn->insert('products', $product);
 
                 foreach ($attributes as $attribute) {

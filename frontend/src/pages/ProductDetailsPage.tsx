@@ -78,7 +78,7 @@ const ProductDetailsPage: React.FC = () => {
             >
                 {/* Secondary pictures */}
                 {product.gallery.length > 1 &&
-                    <div className="flex flex-col gap-2 max-h-[476px] overflow-auto scrollable">
+                    <div className="flex flex-col gap-2 max-h-[516px] overflow-auto scrollable">
                         {product.gallery.map((image: any, index: number) => (
                             <img
                                 key={index}
@@ -95,7 +95,7 @@ const ProductDetailsPage: React.FC = () => {
                     <img
                         src={product.gallery[currentImageIndex]}
                         alt="Product"
-                        className="w-144 h-119 object-cover"
+                        className="w-144 h-129 object-cover"
                     />
                     {product.gallery.length > 1 &&
                         <>

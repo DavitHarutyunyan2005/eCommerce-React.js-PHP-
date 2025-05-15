@@ -8,22 +8,41 @@ import { CartOverlay } from '../components/CartOverlay/CartOverlay.tsx';
 
 interface ProductListingPageProps {
     category: string;
-    madeFor: 'Men' | 'Women' | 'Kids';
+    madeFor: 'men' | 'women' | 'kids' | 'all';
 }
 
 const ProductListingPage: React.FC<ProductListingPageProps> = ({ category, madeFor }) => {
     const { data, loading, error, } = useQuery(GET_PRODUCTS);
     const { isCartOpen, setIsCartOpen } = useCart();
 
-    const products = (data?.products ?? []).filter(
-        (product: any) => product.category === category && product.madeFor === madeFor
-    );
+    const allProducts = data?.products ?? [];
 
-console.log(error);
+    const products =
+        category === 'all'
+            ? [...allProducts].sort(() => Math.random() - 0.5) 
+            : allProducts.filter((product: any) => {
+                const categoryMatches = product.category === category;
+                const madeForMatches = product.madeFor === madeFor;
+                return categoryMatches && madeForMatches;
+            });
+
+    const pageTitle = () => {
+        if (category === 'clothes') {
+            return madeFor;
+        }
+        if (category === 'tech') {
+            return 'Tech';
+        }
+        if (category === 'all') {
+            return 'All';
+        }
+    }
+    
+
     return (
-        <main className=''>
+        <main>
 
-            <h1 className="font-raleway text-3xl font-medium capitalize my-16 mx-20">{madeFor}</h1>
+            <h1 className="font-raleway text-3xl font-medium capitalize my-16 mx-20">{pageTitle()}</h1>
 
             {error ? (
                 <p className="text-red-500">Error: {error.message}</p>
