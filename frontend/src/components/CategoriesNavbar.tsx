@@ -11,7 +11,7 @@ export const CategoriesNavbar = () => {
     const { isCartOpen, setIsCartOpen, totalQuantity } = useCart();
 
     const location = useLocation();
-    
+    const isClothesPage = location.pathname.startsWith('/clothes');
 
     return (
         <div className="relative">
@@ -38,7 +38,7 @@ export const CategoriesNavbar = () => {
                                 isActive ? 'text-[#5ECE7B]' : 'text-gray-500'
                             )
                         }
-                        data-testid={location.pathname === '/clothes' ? 'active-category-link' : 'category-link'}
+                        data-testid={isClothesPage ? 'active-category-link' : 'category-link'}
                     >
                         Clothes
                     </NavLink>

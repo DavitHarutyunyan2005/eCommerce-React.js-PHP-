@@ -51,7 +51,7 @@ export const CartItem: React.FC<CartItemProps> = ({ product }) => {
                                 <div
                                     className="flex flex-col gap-2"
                                     key={index}
-                                    data-testid={`cart-item-attribute-${toKebabCase(attr.name)}`}
+                                    data-testid={`product-attribute-${toKebabCase(attr.name)}`}
                                 >
                                     <span className='font-raleway'>Color:</span>
                                     <div className='flex gap-2'>
@@ -61,7 +61,7 @@ export const CartItem: React.FC<CartItemProps> = ({ product }) => {
                                                 className={clsx('w-6 h-6 border', item.selected && 'ring-2 ring-black')}
                                                 style={{ backgroundColor: item.value }}
                                                 data-testid={
-                                                    `cart-item-attribute-${toKebabCase(attr.name)}-${toKebabCase(item.displayValue)}`
+                                                    `product-attribute-${toKebabCase(attr.name)}-${item.displayValue}`
                                                     + (item.selected ? '-selected' : '')
                                                 }
                                             />

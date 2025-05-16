@@ -132,7 +132,7 @@ const ProductDetailsPage: React.FC = () => {
                                 <p className="text-lg font-semibold">{attr.name.toUpperCase()}:</p>
                                 <div className="flex gap-2 mt-2">
                                     {attr.items
-                                        .slice() 
+                                        .slice()
                                         .sort((a: any, b: any) => sortSizes([a.value, b.value])[0] === a.value ? -1 : 1)
                                         .map((item: any) => (
                                             <button
@@ -142,6 +142,10 @@ const ProductDetailsPage: React.FC = () => {
                                                     'border-2 px-4 py-2 cursor-pointer',
                                                     item.selected ? 'bg-black text-white' : 'bg-white text-black'
                                                 )}
+                                                data-testid={
+                                                    `product-attribute-${toKebabCase(attr.name)}-${item.displayValue}`
+                                                    + (item.selected ? '-selected' : '')
+                                                }
                                             >
                                                 {item.value}
                                             </button>
@@ -166,6 +170,10 @@ const ProductDetailsPage: React.FC = () => {
                                             onClick={() => handleAttributeItemChange(attr.name, item.value)}
                                             className={`w-9 h-9 cursor-pointer ${item.selected ? 'border-green-500 border-3' : 'border-1 border-black'}`}
                                             style={{ backgroundColor: item.value }}
+                                            data-testid={
+                                                `product-attribute-${toKebabCase(attr.name)}-${item.displayValue}`
+                                                + (item.selected ? '-selected' : '')
+                                            }
                                         />
                                     ))}
                                 </div>
@@ -185,7 +193,7 @@ const ProductDetailsPage: React.FC = () => {
                     <div className="relative" >
                         <button
                             data-testid='add-to-cart'
-                            disabled={!product.inStock}
+                            disabled={!product.inStock || !areAttributesSelected}
                             onClick={() => addToCart(product)}
                             className={
                                 'py-3 px-6 font-semibold transition-colors duration-400 ' +
@@ -214,6 +222,7 @@ const ProductDetailsPage: React.FC = () => {
                             <span className='text-white font-raleway'>{itemInCart(product)} ADDED TO CART</span>
                             <button
                                 data-testid='add-to-cart'
+                                disabled={!product.inStock || !areAttributesSelected}
                                 className='border-3 border-white rounded-full p-0.5 cursor-pointer hover:opacity-50'
                                 onClick={() => addToCart(product)}
                             >

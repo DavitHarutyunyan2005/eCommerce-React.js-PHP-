@@ -32,9 +32,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     }
 
     const price = product.prices[0];
-
-    console.log(`product-${toKebabCase(product.name)}`);
-
+    
     return (
         <div
             className={
