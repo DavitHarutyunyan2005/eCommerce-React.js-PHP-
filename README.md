@@ -19,6 +19,7 @@ A modern full-stack eCommerce application built with **React.js** (frontend), **
 ├── frontend/             # React.js frontend application
 │   ├── src/              # React components, pages, assets
 │   └── public/           # Static files (index.html, etc.)
+
 ## 📦 Features
 
 - Product listings with categories
