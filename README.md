@@ -40,10 +40,15 @@ cd ecommerce-app
 cd backend
 composer install
 cp .env.example .env
-# Configure DB settings in .env
-php migrations.php
-php seed.php
+
+# Edit your .env file to configure your database connection
+
+php script/migration.php
+php script/seed.php
+
+# To run the backend locally for testing (optional):
 php -S localhost:8000 -t public
+
 ```
 
 ### 3. Setup Frontend
