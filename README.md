@@ -13,11 +13,15 @@ A modern full-stack eCommerce application built with **React.js** (frontend), **
 ├── backend/              # Backend API (PHP + GraphQL)
 
 │   ├── script/           # Migration and seed scripts
+
 │   ├── src/              # Source code (models, etc.)
+
 │   └── public/           # Public web root for backend
 
 ├── frontend/             # React.js frontend application
+
 │   ├── src/              # React components, pages, assets
+
 │   └── public/           # Static files (index.html, etc.)
 
 ## 📦 Features
