@@ -23,7 +23,7 @@ A modern full-stack eCommerce application built with **React.js** (frontend), **
 ## 📦 Features
 
 - Product listings with categories
-- Product details with swatches and attributes
+- Product details with attributes
 - Add to cart and manage orders
 - Session-based cart (localStorage)
 - GraphQL API with custom schema
