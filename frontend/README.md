@@ -49,8 +49,6 @@ php -S localhost:8000 -t public
 ### 3. Setup Frontend
 
 ```bash
-Պատճենել
-Խմբագրել
 cd frontend
 npm install
 npm run dev
