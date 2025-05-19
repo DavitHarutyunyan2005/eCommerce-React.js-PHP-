@@ -30,7 +30,7 @@ backend/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/ecommerce-app.git
+git clone https://github.com/DavitHarutyunyan2005/eCommerce-React.js-PHP-.git ecommerce-app
 cd ecommerce-app
 ```
 
